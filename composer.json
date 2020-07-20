@@ -4,7 +4,7 @@
   "type": "composer-plugin",
   "license": "MIT",
   "require": {
-    "illuminate/support": "^7.20",
+    "illuminate/support": "^7.19",
     "lcobucci/jwt": "^3.3",
     "ext-json": "*"
   },
