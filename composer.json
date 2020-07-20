@@ -1,7 +1,6 @@
 {
   "name": "asseco-voice/authentication",
   "description": "Package to decode and verify JWT tokens",
-  "type": "composer-plugin",
   "license": "MIT",
   "require": {
     "illuminate/support": "^7.19",
