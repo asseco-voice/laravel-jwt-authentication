@@ -1,0 +1,29 @@
+{
+  "name": "asseco-voice/authentication",
+  "description": "Package to decode and verify JWT tokens",
+  "type": "composer-plugin",
+  "license": "MIT",
+  "require": {
+    "illuminate/support": "^7.20",
+    "lcobucci/jwt": "^3.3",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5",
+    "mockery/mockery": "^1.3.1"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Voice\\AuthUserProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Voice\\Auth\\": "src/"
+    }
+  }
+}
