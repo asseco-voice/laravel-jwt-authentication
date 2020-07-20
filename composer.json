@@ -16,7 +16,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Voice\\AuthUserProvider"
+        "Voice\\Auth\\AuthUserServiceProvider"
       ]
     }
   },
