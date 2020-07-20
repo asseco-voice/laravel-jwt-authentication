@@ -12,7 +12,7 @@ class AuthUserServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/asseco-auth.php', 'asseco-auth');
+        $this->mergeConfigFrom(__DIR__ . '/config/voice-auth.php', 'voice-auth');
 
         Auth::provider('jwt_provider', function($app, array $config) {
             return new TokenUserProvider(
