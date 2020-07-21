@@ -29,7 +29,7 @@ class TokenUser implements Authenticatable
      */
     public function setFromClaims(array $claims = []): self
     {
-        $this->claims = $claims;
+//        $this->claims = $claims;
         $this->fromToken = true;
         $this->extractData($this->claims);
         return $this;

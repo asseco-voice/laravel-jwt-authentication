@@ -13,6 +13,8 @@ class AuthUserServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__ . '/config/voice-auth.php', 'voice-auth');
+        $this->mergeConfigFrom(__DIR__ . '/config/guard.php', 'auth.guards');
+        $this->mergeConfigFrom(__DIR__ . '/config/provider.php', 'auth.providers');
 
         Auth::provider('jwt_provider', function($app, array $config) {
             return new TokenUserProvider(
