@@ -10,6 +10,7 @@ use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
+use Voice\Auth\App\Interfaces\MapperInterface;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class Decoder
@@ -52,7 +53,10 @@ class Decoder
     private string $keyLocation;
 
 
-    public function __construct(string $keyLocation, TokenUserInterface $user)
+    public function __construct(
+        string $keyLocation,
+        TokenUserInterface $user
+    )
     {
         $this->publicKey = new Key('file://' . $keyLocation);
 

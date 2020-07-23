@@ -5,8 +5,10 @@ namespace Voice\Auth\App;
 
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Arr;
+use Voice\Auth\App\Interfaces\TokenUserInterface;
 
-class TokenUser implements Authenticatable
+class TokenUser implements Authenticatable, TokenUserInterface
 {
     private array $jwtData = [];
 
@@ -14,14 +16,15 @@ class TokenUser implements Authenticatable
 
     public bool $fromToken = false;
 
-    public string $identifier = "id";
+    public string $identifier = "user_id";
+
+    public array $groups = [];
 
     public array $data = [];
 
-    /**
-     * @var array
-     */
-    private array $claims;
+    protected array $claimMap = [
+        'skill_groups' => 'groups',
+    ];
 
     /**
      * @param array $claims
@@ -29,17 +32,19 @@ class TokenUser implements Authenticatable
      */
     public function setFromClaims(array $claims = []): self
     {
-//        $this->claims = $claims;
         $this->fromToken = true;
-        $this->extractData($this->claims);
+        $this->extractData($claims);
         return $this;
     }
-
     /**
      * @param array $claims
      */
     private function extractData(array $claims = [])
     {
+        if(isset($claims[$this->identifier])){
+            $this->{$this->identifier} = $claims[$this->identifier];
+        }
+
         foreach ($claims as $claimKey => $claimValue){
             if (in_array($claimKey, Decoder::JWT_IGNORE_CLAIMS)){
                 $this->jwtData[$claimKey] = $claimValue;
@@ -49,7 +54,15 @@ class TokenUser implements Authenticatable
             if(strpos($claimKey, Decoder::ACCESS_KEYWORD) !== false){
                 $this->roles[$claimKey] = $claimValue;
             }
+            if(isset($this->claimMap[$claimKey])){
+                $this->{$this->claimMap[$claimKey]}[] = $claimValue;
+            }
         }
+    }
+
+    public function getId(): string
+    {
+        return $this->{$this->identifier};
     }
 
     /**
@@ -58,11 +71,12 @@ class TokenUser implements Authenticatable
      */
     public function get(string $keyword)
     {
-        return isset($this->data[$keyword]) ? $this->data[$keyword] : null;
+        return Arr::get($this->data, $keyword, null);
     }
 
     public function findRole(string $string)
     {
+        return Arr::get($this->roles, $keyword, null);
     }
 
     /**
