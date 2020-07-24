@@ -25,5 +25,16 @@ return [
     /**
      * User that will be injected into the Laravel auth middleware
      */
-    'user' => '\Voice\Auth\App\User'
+    'user' => '\Voice\Auth\App\User',
+    /*
+     * if set to false the verifier will not throw an exception and will load the user entity into the auth regardles
+     * of validity
+     * A new Array key (voice_sys_validated) is inserted into the claims passed to the setFromClaims. The value is a
+     * boolen that marks if the user is valid or not
+     */
+    'throw_exception_on_invalid' => false,
+    /**
+     * if set to false token expiration will not be checked
+     */
+    'verify_expiration' => true
 ];

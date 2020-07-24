@@ -15,6 +15,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public array $roles = [];
 
     public bool $fromToken = false;
+    public bool $valid = false;
 
     public string $identifier = "user_id";
 
@@ -43,6 +44,9 @@ class TokenUser implements Authenticatable, TokenUserInterface
     {
         if(isset($claims[$this->identifier])){
             $this->{$this->identifier} = $claims[$this->identifier];
+        }
+        if(isset($claims['voice_sys_validated'])){
+            $this->valid = $claims['voice_sys_validated'];
         }
 
         foreach ($claims as $claimKey => $claimValue){
@@ -76,7 +80,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public function findRole(string $string)
     {
-        return Arr::get($this->roles, $keyword, null);
+        return Arr::get($this->roles, $string, null);
     }
 
     /**

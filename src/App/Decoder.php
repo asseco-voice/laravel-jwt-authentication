@@ -10,7 +10,7 @@ use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
-use Voice\Auth\App\Interfaces\MapperInterface;
+use Voice\Auth\App\Exceptions\TokenExpirationException;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class Decoder
@@ -90,16 +90,31 @@ class Decoder
         $this->token = $this->parser->parse((string)$token);
     }
 
-    public function verifyToken(Token $token = null): bool
+    private function verifyToken(): bool
     {
-        return $token ? $token->verify($this->signer, $this->publicKey) : $this->token->verify($this->signer, $this->publicKey);
+        $valid = $this->token->verify($this->signer, $this->publicKey);
+        if($valid){
+            if(config('voice-auth.verify_expiration')){
+                if(isset($this->claims['exp'])){
+                    $now = (new \DateTime())->getTimestamp();
+                    if($now > $this->claims['exp']){
+                        if(config('voice-auth.throw_exception_on_invalid')){
+                            throw new TokenExpirationException();
+                        }
+                        return false;
+                    }
+                }
+            }else{
+                throw new TokenExpirationException();
+            }
+        }
+        return $valid;
     }
 
     public function getUser(): TokenUserInterface
     {
-        if($this->validToken){
-            return $this->user->setFromClaims($this->claims);
-        }
+        $this->claims['voice_sys_validated'] = $this->validToken;
+        return $this->user->setFromClaims($this->claims);
     }
 
 }
