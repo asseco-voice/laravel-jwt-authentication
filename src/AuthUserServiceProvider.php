@@ -4,6 +4,7 @@
 namespace Voice\Auth;
 
 
+use Voice\Auth\App\Console\Commands\FetchPublicKey;
 use Voice\Auth\App\Decoder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,17 @@ class AuthUserServiceProvider extends ServiceProvider
                 )
             );
         });
+
+        $this->registerCommands();
+    }
+
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FetchPublicKey::class,
+            ]);
+        }
     }
 
 }
