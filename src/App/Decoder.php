@@ -10,6 +10,7 @@ use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
+use Voice\Auth\App\Exceptions\InvalidTokenException;
 use Voice\Auth\App\Exceptions\TokenExpirationException;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
@@ -53,6 +54,11 @@ class Decoder
     private string $keyLocation;
 
 
+    /**
+     * Decoder constructor.
+     * @param string $keyLocation
+     * @param TokenUserInterface $user
+     */
     public function __construct(
         string $keyLocation,
         TokenUserInterface $user
@@ -70,6 +76,12 @@ class Decoder
         $this->keyLocation = $keyLocation;
     }
 
+    /**
+     * @param string $token
+     * @return $this
+     * @throws InvalidTokenException
+     * @throws TokenExpirationException
+     */
     public function decodeToken(string $token): self
     {
         $this->splitToken($token);
@@ -77,11 +89,15 @@ class Decoder
         return $this;
     }
 
+    /**
+     * @param string $token
+     * @throws InvalidTokenException
+     */
     private function splitToken(string $token)
     {
         $parts = explode('.', $token);
         if (count($parts) != 3) {
-            throw new \Exception("Shit not right!");
+            throw new InvalidTokenException();
         }
         $this->headers = json_decode(base64_decode($parts[0]), true);
         $this->claims = json_decode(base64_decode($parts[1]), true);
@@ -90,15 +106,19 @@ class Decoder
         $this->token = $this->parser->parse((string)$token);
     }
 
+    /**
+     * @return bool
+     * @throws TokenExpirationException
+     */
     private function verifyToken(): bool
     {
         $valid = $this->token->verify($this->signer, $this->publicKey);
         if($valid){
-            if(config('voice-auth.verify_expiration')){
+            if(config('asseco-voice.authentication.verify_expiration')){
                 if(isset($this->claims['exp'])){
                     $now = (new \DateTime())->getTimestamp();
                     if($now > $this->claims['exp']){
-                        if(config('voice-auth.throw_exception_on_invalid')){
+                        if(config('asseco-voice.authentication.throw_exception_on_invalid')){
                             throw new TokenExpirationException();
                         }
                         return false;

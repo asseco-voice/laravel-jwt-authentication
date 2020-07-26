@@ -17,15 +17,17 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public bool $fromToken = false;
     public bool $valid = false;
 
-    public string $identifier = "user_id";
-
-    public array $groups = [];
+    public string $identifier;
 
     public array $data = [];
 
-    protected array $claimMap = [
-        'skill_groups' => 'groups',
-    ];
+    private array $claimMap;
+
+    public function __construct()
+    {
+        $this->identifier = config('asseco-voice.authentication.user_identifier');
+        $this->claimMap = config('asseco-voice.authentication.claim_map');
+    }
 
     /**
      * @param array $claims
@@ -44,7 +46,10 @@ class TokenUser implements Authenticatable, TokenUserInterface
     {
         if(isset($claims[$this->identifier])){
             $this->{$this->identifier} = $claims[$this->identifier];
+        }else{
+            $this->{$this->identifier} = null;
         }
+
         if(isset($claims['voice_sys_validated'])){
             $this->valid = $claims['voice_sys_validated'];
         }
@@ -58,10 +63,13 @@ class TokenUser implements Authenticatable, TokenUserInterface
             if(strpos($claimKey, Decoder::ACCESS_KEYWORD) !== false){
                 $this->roles[$claimKey] = $claimValue;
             }
-            if(isset($this->claimMap[$claimKey])){
-                $this->{$this->claimMap[$claimKey]}[] = $claimValue;
-            }
         }
+
+        foreach ($this->claimMap as $mapKey => $mapValue){
+            $this->{$mapValue} = Arr::get($claims, $mapKey, null);
+        }
+
+
     }
 
     public function getId(): string

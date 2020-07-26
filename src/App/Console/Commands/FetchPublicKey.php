@@ -2,7 +2,6 @@
 
 namespace Voice\Auth\App\Console\Commands;
 
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -39,9 +38,14 @@ class FetchPublicKey extends Command
      */
     public function handle()
     {
+        if(!config('asseco-voice.authentication.iam_key_url')){
+            echo 'Configuration missing. no IAM_KEY_URL set';
+            return 1;
+        }
+
         try {
 
-            $response = Http::get(config('voice-auth.iam_key_url'));
+            $response = Http::get(config('asseco-voice.authentication.iam_key_url'));
 
             $jsonBody = $response->json();
 
@@ -51,7 +55,7 @@ class FetchPublicKey extends Command
             return 1;
         }
 
-        $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[config('voice-auth.public_key_array_location')] .PHP_EOL . '-----END PUBLIC KEY-----';
+        $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[config('asseco-voice.authentication.public_key_array_location')] .PHP_EOL . '-----END PUBLIC KEY-----';
 
         $publicKeyFile = fopen(env('JWT_PUBLIC_KEY'), "w");
 
