@@ -26,7 +26,7 @@ return [
         /**
          * User that will be injected into the Laravel auth middleware
          */
-        'user' => '\Voice\Auth\App\User',
+        'user' => '\Voice\Auth\App\TokenUser',
         /*
          * if set to false the verifier will not throw an exception and will load the user entity into the auth regardles
          * of validity
