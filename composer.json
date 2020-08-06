@@ -1,5 +1,5 @@
 {
-  "name": "asseco-voice/laravel-authentication",
+  "name": "asseco-voice/laravel-jwt-authentication",
   "description": "Package to decode and verify JWT tokens",
   "license": "MIT",
   "require": {
