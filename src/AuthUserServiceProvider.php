@@ -36,12 +36,7 @@ class AuthUserServiceProvider extends ServiceProvider
             );
         });
 
-        if(!env('OVERRIDE_AUTHENTICATION', false)){
-            /** @var Router $router */
-            $router = $this->app['router'];
-            $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
-        }
-
+        $this->prependMiddleware();
         $this->registerCommands();
     }
 
@@ -51,6 +46,14 @@ class AuthUserServiceProvider extends ServiceProvider
             $this->commands([
                 FetchPublicKey::class,
             ]);
+        }
+    }
+
+    protected function prependMiddleware(): void
+    {
+        if (!env('OVERRIDE_AUTHENTICATION', false)) {
+            $router = $this->app['router'];
+            $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
         }
     }
 }
