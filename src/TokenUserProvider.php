@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Voice\Auth;
-
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -11,7 +9,6 @@ use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class TokenUserProvider implements UserProvider
 {
-
     /**
      * @var TokenUserInterface
      */

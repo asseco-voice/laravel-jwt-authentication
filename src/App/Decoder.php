@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Voice\Auth\App;
-
 
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
@@ -16,7 +14,6 @@ use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class Decoder
 {
-
     const JWT_IGNORE_CLAIMS = [
         "jti",
         "exp",
@@ -34,15 +31,15 @@ class Decoder
 
     const ACCESS_KEYWORD = 'access';
 
-    private Key $publicKey;
-    private Rsa $signer;
+    private Key     $publicKey;
+    private Rsa     $signer;
     private Builder $builder;
-    private Parser $parser;
-    private Token $token;
-    private bool $validToken;
+    private Parser  $parser;
+    private Token   $token;
+    private bool    $validToken;
 
-    private array $headers;
-    private array $claims;
+    private array  $headers;
+    private array  $claims;
     private string $signature;
     /**
      * @var TokenUserInterface
@@ -59,10 +56,7 @@ class Decoder
      * @param string $keyLocation
      * @param TokenUserInterface $user
      */
-    public function __construct(
-        string $keyLocation,
-        TokenUserInterface $user
-    )
+    public function __construct(string $keyLocation, TokenUserInterface $user)
     {
         $this->publicKey = new Key('file://' . $keyLocation);
 
@@ -113,18 +107,18 @@ class Decoder
     private function verifyToken(): bool
     {
         $valid = $this->token->verify($this->signer, $this->publicKey);
-        if($valid){
-            if(config('asseco-voice.authentication.verify_expiration')){
-                if(isset($this->claims['exp'])){
+        if ($valid) {
+            if (config('asseco-authentication.verify_expiration')) {
+                if (isset($this->claims['exp'])) {
                     $now = (new \DateTime())->getTimestamp();
-                    if($now > $this->claims['exp']){
-                        if(config('asseco-voice.authentication.throw_exception_on_invalid')){
+                    if ($now > $this->claims['exp']) {
+                        if (config('asseco-authentication.throw_exception_on_invalid')) {
                             throw new TokenExpirationException();
                         }
                         return false;
                     }
                 }
-            }else{
+            } else {
                 throw new TokenExpirationException();
             }
         }

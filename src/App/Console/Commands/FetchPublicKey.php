@@ -19,7 +19,7 @@ class FetchPublicKey extends Command
      *
      * @var string
      */
-    protected $description = 'Fetch Iam public key from service';
+    protected $description = 'Fetch IAM public key from the service';
 
     /**
      * Create a new command instance.
@@ -38,14 +38,14 @@ class FetchPublicKey extends Command
      */
     public function handle()
     {
-        if(!config('asseco-voice.authentication.iam_key_url')){
+        if(!config('asseco-authentication.iam_key_url')){
             echo 'Configuration missing. no IAM_KEY_URL set';
             return 1;
         }
 
         try {
 
-            $response = Http::get(config('asseco-voice.authentication.iam_key_url'));
+            $response = Http::get(config('asseco-authentication.iam_key_url'));
 
             $jsonBody = $response->json();
 
@@ -55,7 +55,7 @@ class FetchPublicKey extends Command
             return 1;
         }
 
-        $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[config('asseco-voice.authentication.public_key_array_location')] .PHP_EOL . '-----END PUBLIC KEY-----';
+        $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[config('asseco-authentication.public_key_array_location')] .PHP_EOL . '-----END PUBLIC KEY-----';
 
         $publicKeyFile = fopen(env('JWT_PUBLIC_KEY'), "w");
 

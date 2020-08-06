@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Voice\Auth\App;
-
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Arr;
@@ -15,7 +13,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public array $roles = [];
 
     public bool $fromToken = false;
-    public bool $valid = false;
+    public bool $valid     = false;
 
     public string $identifier;
 
@@ -25,8 +23,8 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public function __construct()
     {
-        $this->identifier = config('asseco-voice.authentication.user_identifier');
-        $this->claimMap = config('asseco-voice.authentication.claim_map');
+        $this->identifier = config('asseco-authentication.user_identifier');
+        $this->claimMap = config('asseco-authentication.claim_map');
     }
 
     /**
@@ -39,36 +37,36 @@ class TokenUser implements Authenticatable, TokenUserInterface
         $this->extractData($claims);
         return $this;
     }
+
     /**
      * @param array $claims
      */
     private function extractData(array $claims = [])
     {
-        if(isset($claims[$this->identifier])){
+        if (isset($claims[$this->identifier])) {
             $this->{$this->identifier} = $claims[$this->identifier];
-        }else{
+        } else {
             $this->{$this->identifier} = null;
         }
 
-        if(isset($claims['voice_sys_validated'])){
+        if (isset($claims['voice_sys_validated'])) {
             $this->valid = $claims['voice_sys_validated'];
         }
 
-        foreach ($claims as $claimKey => $claimValue){
-            if (in_array($claimKey, Decoder::JWT_IGNORE_CLAIMS)){
+        foreach ($claims as $claimKey => $claimValue) {
+            if (in_array($claimKey, Decoder::JWT_IGNORE_CLAIMS)) {
                 $this->jwtData[$claimKey] = $claimValue;
                 continue;
             }
             $this->data[$claimKey] = $claimValue;
-            if(strpos($claimKey, Decoder::ACCESS_KEYWORD) !== false){
+            if (strpos($claimKey, Decoder::ACCESS_KEYWORD) !== false) {
                 $this->roles[$claimKey] = $claimValue;
             }
         }
 
-        foreach ($this->claimMap as $mapKey => $mapValue){
+        foreach ($this->claimMap as $mapKey => $mapValue) {
             $this->{$mapValue} = Arr::get($claims, $mapKey, null);
         }
-
 
     }
 
