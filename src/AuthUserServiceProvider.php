@@ -51,7 +51,7 @@ class AuthUserServiceProvider extends ServiceProvider
 
     protected function prependMiddleware(): void
     {
-        if (!env('OVERRIDE_AUTHENTICATION', false)) {
+        if (env('OVERRIDE_AUTHENTICATION', false) !== true) {
             $router = $this->app['router'];
             $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
         }
