@@ -36,6 +36,12 @@ class AuthUserServiceProvider extends ServiceProvider
             );
         });
 
+        if(!env('OVERRIDE_AUTHENTICATION', false)){
+            /** @var Router $router */
+            $router = $this->app['router'];
+            $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
+        }
+
         $this->registerCommands();
     }
 
