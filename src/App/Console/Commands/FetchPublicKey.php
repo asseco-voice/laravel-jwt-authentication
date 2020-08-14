@@ -3,6 +3,7 @@
 namespace Voice\Auth\App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 class FetchPublicKey extends Command
@@ -57,7 +58,7 @@ class FetchPublicKey extends Command
 
         $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[config('asseco-authentication.public_key_array_location')] .PHP_EOL . '-----END PUBLIC KEY-----';
 
-        $publicKeyFile = fopen(env('JWT_PUBLIC_KEY'), "w");
+        $publicKeyFile = fopen(Config::get('asseco-authentication.public_key'), "w");
 
         fwrite($publicKeyFile, $publicKey);
 

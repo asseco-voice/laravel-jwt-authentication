@@ -3,6 +3,7 @@
 namespace Voice\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Voice\Auth\App\Console\Commands\FetchPublicKey;
 use Voice\Auth\App\Decoder;
@@ -51,7 +52,9 @@ class AuthUserServiceProvider extends ServiceProvider
 
     protected function prependMiddleware(): void
     {
-        if (env('OVERRIDE_AUTHENTICATION', false) !== true) {
+        $override = Config::get('asseco-authentication.override_authentication');
+
+        if (!$override) {
             $router = $this->app['router'];
             $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
         }

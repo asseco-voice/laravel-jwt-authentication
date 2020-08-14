@@ -58,4 +58,9 @@ return [
      * someSubgroup in the user object
      */
     'claim_map'                  => [],
+
+    /**
+     * For dev purposes. Setting to true will ignore authentication completely
+     */
+    'override_authentication' => env('OVERRIDE_AUTHENTICATION', false) === true,
 ];
