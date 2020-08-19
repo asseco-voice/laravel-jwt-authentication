@@ -21,7 +21,7 @@ return [
     /**
      * Location where to save the public key
      */
-    'public_key'                 => env("JWT_PUBLIC_KEY"),
+    'public_key'                 => env("JWT_PUBLIC_KEY", "/var/www/html/src/config/"),
     /**
      * User that will be injected into the Laravel auth middleware
      */
