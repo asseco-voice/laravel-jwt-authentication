@@ -50,6 +50,8 @@ class Decoder
      */
     private string $keyLocation;
 
+    private string $stringToken;
+
 
     /**
      * Decoder constructor.
@@ -78,6 +80,7 @@ class Decoder
      */
     public function decodeToken(string $token): self
     {
+        $this->stringToken = $token;
         $this->splitToken($token);
         $this->validToken = $this->verifyToken();
         return $this;
@@ -128,7 +131,7 @@ class Decoder
     public function getUser(): TokenUserInterface
     {
         $this->claims['voice_sys_validated'] = $this->validToken;
-        return $this->user->setFromClaims($this->claims);
+        return $this->user->setFromClaims($this->claims)->setStringToken($this->token);
     }
 
 }
