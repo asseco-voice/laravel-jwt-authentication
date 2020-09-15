@@ -4,8 +4,8 @@
     "license": "MIT",
     "require": {
         "ext-json": "*",
-        "illuminate/console": "^7.21",
-        "illuminate/support": "^7.19",
+        "illuminate/console": "^8.0",
+        "illuminate/support": "^8.0",
         "lcobucci/jwt": "^3.3",
         "guzzlehttp/guzzle": "^7.0.1"
     },
