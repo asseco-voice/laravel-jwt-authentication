@@ -13,7 +13,7 @@ class FetchPublicKey extends Command
      *
      * @var string
      */
-    protected $signature = 'asseco-voice:fetch-key';
+    protected $signature = 'voice:fetch-key';
 
     /**
      * The console command description.

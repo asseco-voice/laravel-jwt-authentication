@@ -16,7 +16,7 @@ In order to gain access to additional configuration run
 php artisan vendor:publish
 ```
 
-This will publish the asseco-voice.php configuration file into your config directory
+This will publish the asseco-authentication.php configuration file into your config directory
 
 ## Quick usage
 
@@ -49,7 +49,7 @@ injecting it as the authenticated user.
 Package comes with a convenience command. The only requirement is the env value ```IAM_KEY_URL```.
 
 ```
-php artisan asseco-voice:fetch-key
+php artisan voice:fetch-key
 ```
 
 The method is made to hit the configured endpoint and extract the public key from the response.
