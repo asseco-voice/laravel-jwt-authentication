@@ -15,18 +15,18 @@ use Voice\Auth\App\Interfaces\TokenUserInterface;
 class Decoder
 {
     const JWT_IGNORE_CLAIMS = [
-        "jti",
-        "exp",
-        "nbf",
-        "iat",
-        "iss",
-        "aud",
-        "sub",
-        "typ",
-        "azp",
-        "auth_time",
-        "session_state",
-        "acr"
+        'jti',
+        'exp',
+        'nbf',
+        'iat',
+        'iss',
+        'aud',
+        'sub',
+        'typ',
+        'azp',
+        'auth_time',
+        'session_state',
+        'acr',
     ];
 
     const ACCESS_KEYWORD = 'access';
@@ -51,7 +51,6 @@ class Decoder
     private string $keyLocation;
 
     private string $stringToken;
-
 
     /**
      * Decoder constructor.
@@ -83,6 +82,7 @@ class Decoder
         $this->stringToken = $token;
         $this->splitToken($token);
         $this->validToken = $this->verifyToken();
+
         return $this;
     }
 
@@ -100,7 +100,7 @@ class Decoder
         $this->claims = json_decode(base64_decode($parts[1]), true);
         $this->signature = $parts[2];
 
-        $this->token = $this->parser->parse((string)$token);
+        $this->token = $this->parser->parse((string) $token);
     }
 
     /**
@@ -118,6 +118,7 @@ class Decoder
                         if (config('asseco-authentication.throw_exception_on_invalid')) {
                             throw new TokenExpirationException();
                         }
+
                         return false;
                     }
                 }
@@ -125,13 +126,14 @@ class Decoder
                 throw new TokenExpirationException();
             }
         }
+
         return $valid;
     }
 
     public function getUser(): TokenUserInterface
     {
         $this->claims['voice_sys_validated'] = $this->validToken;
+
         return $this->user->setFromClaims($this->claims)->setStringToken($this->token);
     }
-
 }

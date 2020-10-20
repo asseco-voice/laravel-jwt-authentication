@@ -26,8 +26,7 @@ class TokenUserProvider implements UserProvider
         TokenUserInterface $userModel,
         Decoder $decoder,
         array $config = []
-    )
-    {
+    ) {
         $this->userModel = $userModel;
         $this->decoder = $decoder;
         $this->config = $config;

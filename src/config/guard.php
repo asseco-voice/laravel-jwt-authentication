@@ -1,4 +1,5 @@
 <?php
+
 return[
     'jwt-api' => [
         'driver' => 'token',
