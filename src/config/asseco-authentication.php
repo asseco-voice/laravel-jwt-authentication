@@ -11,19 +11,19 @@
 
 return [
     /**
-     * Url the voice-auth:key command will call to fetch the public key
+     * Url the voice-auth:key command will call to fetch the public key.
      */
     'iam_key_url'                => env('IAM_KEY_URL'),
     /**
-     * Under what key in the response array can the public key be found
+     * Under what key in the response array can the public key be found.
      */
     'public_key_array_location'  => 'public_key',
     /**
-     * Location where to save the public key
+     * Location where to save the public key.
      */
-    'public_key'                 => env("JWT_PUBLIC_KEY", "/var/www/html/config/public.pem"),
+    'public_key'                 => env('JWT_PUBLIC_KEY', '/var/www/html/config/public.pem'),
     /**
-     * User that will be injected into the Laravel auth middleware
+     * User that will be injected into the Laravel auth middleware.
      */
     'user'                       => '\Voice\Auth\App\TokenUser',
     /*
@@ -34,7 +34,7 @@ return [
      */
     'throw_exception_on_invalid' => false,
     /**
-     * if set to false token expiration will not be checked
+     * if set to false token expiration will not be checked.
      */
     'verify_expiration'          => true,
     /**
@@ -60,7 +60,7 @@ return [
     'claim_map'                  => [],
 
     /**
-     * For dev purposes. Setting to true will ignore authentication completely
+     * For dev purposes. Setting to true will ignore authentication completely.
      */
     'override_authentication' => env('OVERRIDE_AUTHENTICATION', false) === true,
 ];

@@ -13,7 +13,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public array $roles = [];
 
     public bool $fromToken = false;
-    public bool $valid     = false;
+    public bool $valid = false;
 
     public string $identifier;
 
@@ -30,7 +30,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     }
 
     /**
-     * Set claims as properties
+     * Set claims as properties.
      *
      * @param array $claims
      * @return $this
@@ -39,11 +39,12 @@ class TokenUser implements Authenticatable, TokenUserInterface
     {
         $this->fromToken = true;
         $this->extractData($claims);
+
         return $this;
     }
 
     /**
-     * Add input string token
+     * Add input string token.
      *
      * @param string $token
      * @return $this
@@ -51,6 +52,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public function setStringToken(string $token): self
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -83,7 +85,6 @@ class TokenUser implements Authenticatable, TokenUserInterface
         foreach ($this->claimMap as $mapKey => $mapValue) {
             $this->{$mapValue} = Arr::get($claims, $mapKey, null);
         }
-
     }
 
     public function getId(): ?string
@@ -91,7 +92,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
         return $this->{$this->identifier};
     }
 
-    public function getTokenAsString():?string
+    public function getTokenAsString(): ?string
     {
         return $this->token;
     }

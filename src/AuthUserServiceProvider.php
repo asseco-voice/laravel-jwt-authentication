@@ -25,7 +25,7 @@ class AuthUserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '/config/asseco-authentication.php' => config_path('asseco-authentication.php'),]);
+        $this->publishes([__DIR__ . '/config/asseco-authentication.php' => config_path('asseco-authentication.php')]);
 
         Auth::provider('jwt_provider', function ($app, array $config) {
             return new TokenUserProvider(
