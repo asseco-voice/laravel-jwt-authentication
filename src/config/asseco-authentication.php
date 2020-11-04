@@ -52,11 +52,10 @@ return [
      * As default user_id is set. This means that when the user object is build it will have a property
      * $userObject->user_id. However it is recommended to user $userObject->getId() that will return the same thing or
      * null if the property could not be found in the claims
-     * 
+     *
      * NOTE: If this key is found the TokenUser will be marked as a service user
      */
-    'client_identifier' => "clientId",
-
+    'client_identifier' => 'clientId',
 
     /**
      * Any additional claim values you wish to map should be set here as a key=>value pair where the key is the
@@ -77,7 +76,7 @@ return [
      */
     'override_authentication' => env('OVERRIDE_AUTHENTICATION', false) === true,
 
-    'client_id' => env("CLIENT_ID"),
-    
-    'client_secret' => env("CLIENT_SECRET")
+    'client_id' => env('CLIENT_ID'),
+
+    'client_secret' => env('CLIENT_SECRET'),
 ];
