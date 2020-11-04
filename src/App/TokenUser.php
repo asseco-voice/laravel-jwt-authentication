@@ -23,6 +23,8 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     private string $token;
 
+    private bool $isServiceToken = false;
+
     public function __construct()
     {
         $this->identifier = config('asseco-authentication.user_identifier');
@@ -67,6 +69,13 @@ class TokenUser implements Authenticatable, TokenUserInterface
             $this->{$this->identifier} = null;
         }
 
+        if (isset($claims[$this->clientIdentifier])) {
+            $this->{$this->clientIdentifier} = $claims[$this->clientIdentifier];
+            $this->isServiceToken = true;
+        } else {
+            $this->{$this->clientIdentifier} = null;
+        }
+
         if (isset($claims['voice_sys_validated'])) {
             $this->valid = $claims['voice_sys_validated'];
         }
@@ -95,6 +104,12 @@ class TokenUser implements Authenticatable, TokenUserInterface
     public function getTokenAsString(): ?string
     {
         return $this->token;
+    }
+    
+
+    public function isServiceToken(): bool
+    {
+        return $this->isServiceToken;
     }
 
     /**

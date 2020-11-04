@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Voice\Auth\App\Console\Commands\FetchPublicKey;
 use Voice\Auth\App\Decoder;
+use Voice\Auth\App\Services\FetchServiceToken;
 
 class AuthUserServiceProvider extends ServiceProvider
 {
@@ -27,13 +28,19 @@ class AuthUserServiceProvider extends ServiceProvider
     {
         $this->publishes([__DIR__ . '/config/asseco-authentication.php' => config_path('asseco-authentication.php')]);
 
+        $this->app->bind(Decoder::class, function ($app) {
+            return new Decoder(
+                config('asseco-authentication.public_key'),
+                $app->make(config('asseco-authentication.user'))
+            );
+        });
+
+        $this->app->bind(FetchServiceToken::class);
+
         Auth::provider('jwt_provider', function ($app, array $config) {
             return new TokenUserProvider(
                 $app->make(config('asseco-authentication.user')),
-                new Decoder(
-                    config('asseco-authentication.public_key'),
-                    $app->make(config('asseco-authentication.user'))
-                )
+                $app->make(Decoder::class)
             );
         });
 
