@@ -108,7 +108,6 @@ class TokenUser implements Authenticatable, TokenUserInterface
     {
         return $this->token;
     }
-    
 
     public function isServiceToken(): bool
     {

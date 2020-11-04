@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Voice\Auth\App\Decoder;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
-class FetchServiceToken 
+class FetchServiceToken
 {
     private Decoder $decoder;
 
@@ -18,7 +18,7 @@ class FetchServiceToken
 
     public function getServiceUser(): TokenUserInterface
     {
-        $url = config("asseco-authentication.iam_key_url") . "/protocol/openid-connect/token";
+        $url = config('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
         //TODO: currently broken because of outside constraints
         // $response = Http::asForm()->post($url, [
         //     "client_id" => env("CLIENT_ID", "livepoc_web"),
@@ -27,26 +27,25 @@ class FetchServiceToken
         // ]);
 
         $response = Http::asForm()->post($url, [
-            "client_id" => config("asseco-authentication.client_id"),
-            "client_secret" => config("asseco-authentication.client_secret"),
-            "grant_type" => "password",
-            "username"=>"live",
-            "password"=>"live"
+            'client_id' => config('asseco-authentication.client_id'),
+            'client_secret' => config('asseco-authentication.client_secret'),
+            'grant_type' => 'password',
+            'username'=>'live',
+            'password'=>'live',
         ]);
 
         if ($response->failed()) {
             Log::error(print_r($response->json(), true));
             throw new \Exception($response->body(), $response->status());
         }
-        $this->token = json_decode($response->body(), true)["access_token"];
+        $this->token = json_decode($response->body(), true)['access_token'];
 
         return $this->decoder->decodeToken($this->token)->getUser();
-
     }
 
     public function getServiceToken(): string
     {
-        $url = config("asseco-authentication.iam_key_url") . "/protocol/openid-connect/token";
+        $url = config('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
         //TODO: currently broken because of outside constraints
         // $response = Http::asForm()->post($url, [
         //     "client_id" => env("CLIENT_ID", "livepoc_web"),
@@ -55,17 +54,18 @@ class FetchServiceToken
         // ]);
 
         $response = Http::asForm()->post($url, [
-            "client_id" => env("CLIENT_ID", "livepoc_web"),
-            "client_secret" => env("CLIENT_SECRET"),
-            "grant_type" => "password",
-            "username"=>"live",
-            "password"=>"live"
+            'client_id' => env('CLIENT_ID', 'livepoc_web'),
+            'client_secret' => env('CLIENT_SECRET'),
+            'grant_type' => 'password',
+            'username'=>'live',
+            'password'=>'live',
         ]);
 
         if ($response->failed()) {
             Log::error(print_r($response->json(), true));
             throw new \Exception($response->body(), $response->status());
         }
-        return json_decode($response->body(), true)["access_token"];
+
+        return json_decode($response->body(), true)['access_token'];
     }
 }
