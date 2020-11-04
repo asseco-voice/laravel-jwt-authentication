@@ -17,6 +17,8 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public string $identifier;
 
+    public string $clientIdentifier;
+
     public array $data = [];
 
     private array $claimMap;
@@ -29,6 +31,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
     {
         $this->identifier = config('asseco-authentication.user_identifier');
         $this->claimMap = config('asseco-authentication.claim_map');
+        $this->clientIdentifier = config('asseco-authentication.client_identifier');
     }
 
     /**
@@ -37,7 +40,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
      * @param array $claims
      * @return $this
      */
-    public function setFromClaims(array $claims = []): self
+    public function setFromClaims(array $claims): self
     {
         $this->fromToken = true;
         $this->extractData($claims);
