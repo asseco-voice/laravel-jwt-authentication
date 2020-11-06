@@ -70,7 +70,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
         $this->{$this->identifier} = Arr::get($claims, $this->identifier);
         $this->{$this->clientIdentifier} = Arr::get($claims, $this->clientIdentifier);
 
-        if($this->{$this->clientIdentifier}){
+        if ($this->{$this->clientIdentifier}) {
             $this->isServiceToken = true;
         }
 
