@@ -2,6 +2,7 @@
 
 namespace Voice\Auth\App;
 
+use DateTime;
 use Illuminate\Support\Facades\Config;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
@@ -101,7 +102,7 @@ class Decoder
         $this->claims = json_decode(base64_decode($parts[1]), true);
         $this->signature = $parts[2];
 
-        $this->token = $this->parser->parse((string) $token);
+        $this->token = $this->parser->parse((string)$token);
     }
 
     /**
@@ -111,24 +112,26 @@ class Decoder
     private function verifyToken(): bool
     {
         $valid = $this->token->verify($this->signer, $this->publicKey);
-        if ($valid) {
-            if (Config::get('asseco-authentication.verify_expiration')) {
-                if (isset($this->claims['exp'])) {
-                    $now = (new \DateTime())->getTimestamp();
-                    if ($now > $this->claims['exp']) {
-                        if (Config::get('asseco-authentication.throw_exception_on_invalid')) {
-                            throw new TokenExpirationException();
-                        }
 
-                        return false;
-                    }
-                }
-            } else {
-                throw new TokenExpirationException();
-            }
+        if (!$valid) {
+            return false;
         }
 
-        return $valid;
+        if (!Config::get('asseco-authentication.verify_expiration')) {
+            throw new TokenExpirationException();
+        }
+
+        $now = (new DateTime())->getTimestamp();
+
+        if (!isset($this->claims['exp']) || $now <= $this->claims['exp']) {
+            return true;
+        }
+
+        if (Config::get('asseco-authentication.throw_exception_on_invalid')) {
+            throw new TokenExpirationException();
+        }
+
+        return false;
     }
 
     public function getUser(): TokenUserInterface

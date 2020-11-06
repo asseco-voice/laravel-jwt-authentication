@@ -67,17 +67,11 @@ class TokenUser implements Authenticatable, TokenUserInterface
      */
     private function extractData(array $claims = [])
     {
-        if (isset($claims[$this->identifier])) {
-            $this->{$this->identifier} = $claims[$this->identifier];
-        } else {
-            $this->{$this->identifier} = null;
-        }
+        $this->{$this->identifier} = Arr::get($claims, $this->identifier);
+        $this->{$this->clientIdentifier} = Arr::get($claims, $this->clientIdentifier);
 
-        if (isset($claims[$this->clientIdentifier])) {
-            $this->{$this->clientIdentifier} = $claims[$this->clientIdentifier];
+        if($this->{$this->clientIdentifier}){
             $this->isServiceToken = true;
-        } else {
-            $this->{$this->clientIdentifier} = null;
         }
 
         if (isset($claims['voice_sys_validated'])) {
