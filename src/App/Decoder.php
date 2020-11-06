@@ -2,6 +2,7 @@
 
 namespace Voice\Auth\App;
 
+use Illuminate\Support\Facades\Config;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Key;
@@ -111,11 +112,11 @@ class Decoder
     {
         $valid = $this->token->verify($this->signer, $this->publicKey);
         if ($valid) {
-            if (config('asseco-authentication.verify_expiration')) {
+            if (Config::get('asseco-authentication.verify_expiration')) {
                 if (isset($this->claims['exp'])) {
                     $now = (new \DateTime())->getTimestamp();
                     if ($now > $this->claims['exp']) {
-                        if (config('asseco-authentication.throw_exception_on_invalid')) {
+                        if (Config::get('asseco-authentication.throw_exception_on_invalid')) {
                             throw new TokenExpirationException();
                         }
 

@@ -4,6 +4,7 @@ namespace Voice\Auth\App;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class TokenUser implements Authenticatable, TokenUserInterface
@@ -29,9 +30,9 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public function __construct()
     {
-        $this->identifier = config('asseco-authentication.user_identifier');
-        $this->claimMap = config('asseco-authentication.claim_map');
-        $this->clientIdentifier = config('asseco-authentication.client_identifier');
+        $this->identifier = Config::get('asseco-authentication.user_identifier');
+        $this->claimMap = Config::get('asseco-authentication.claim_map');
+        $this->clientIdentifier = Config::get('asseco-authentication.client_identifier');
     }
 
     /**
@@ -120,12 +121,12 @@ class TokenUser implements Authenticatable, TokenUserInterface
      */
     public function get(string $keyword)
     {
-        return Arr::get($this->data, $keyword, null);
+        return Arr::get($this->data, $keyword);
     }
 
     public function findRole(string $string)
     {
-        return Arr::get($this->roles, $string, null);
+        return Arr::get($this->roles, $string);
     }
 
     /**

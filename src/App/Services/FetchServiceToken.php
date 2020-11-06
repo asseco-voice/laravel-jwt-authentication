@@ -2,6 +2,7 @@
 
 namespace Voice\Auth\App\Services;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Voice\Auth\App\Decoder;
@@ -18,7 +19,7 @@ class FetchServiceToken
 
     public function getServiceUser(): TokenUserInterface
     {
-        $url = config('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
+        $url = Config::get('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
         //TODO: currently broken because of outside constraints
         // $response = Http::asForm()->post($url, [
         //     "client_id" => env("CLIENT_ID", "livepoc_web"),
@@ -27,8 +28,8 @@ class FetchServiceToken
         // ]);
 
         $response = Http::asForm()->post($url, [
-            'client_id' => config('asseco-authentication.client_id'),
-            'client_secret' => config('asseco-authentication.client_secret'),
+            'client_id' => Config::get('asseco-authentication.client_id'),
+            'client_secret' => Config::get('asseco-authentication.client_secret'),
             'grant_type' => 'password',
             'username'=>'live',
             'password'=>'live',
@@ -45,7 +46,7 @@ class FetchServiceToken
 
     public function getServiceToken(): string
     {
-        $url = config('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
+        $url = Config::get('asseco-authentication.iam_key_url') . '/protocol/openid-connect/token';
         //TODO: currently broken because of outside constraints
         // $response = Http::asForm()->post($url, [
         //     "client_id" => env("CLIENT_ID", "livepoc_web"),

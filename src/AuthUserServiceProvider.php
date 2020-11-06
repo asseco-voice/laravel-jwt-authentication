@@ -16,9 +16,9 @@ class AuthUserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/asseco-authentication.php', 'asseco-authentication');
-        $this->mergeConfigFrom(__DIR__ . '/config/guard.php', 'auth.guards');
-        $this->mergeConfigFrom(__DIR__ . '/config/provider.php', 'auth.providers');
+        $this->mergeConfigFrom(__DIR__ . '/../config/asseco-authentication.php', 'asseco-authentication');
+        $this->mergeConfigFrom(__DIR__ . '/../config/guard.php', 'auth.guards');
+        $this->mergeConfigFrom(__DIR__ . '/../config/provider.php', 'auth.providers');
     }
 
     /**
@@ -26,12 +26,12 @@ class AuthUserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '/config/asseco-authentication.php' => config_path('asseco-authentication.php')]);
+        $this->publishes([__DIR__ . '/../config/asseco-authentication.php' => config_path('asseco-authentication.php')]);
 
         $this->app->bind(Decoder::class, function ($app) {
             return new Decoder(
-                config('asseco-authentication.public_key'),
-                $app->make(config('asseco-authentication.user'))
+                Config::get('asseco-authentication.public_key'),
+                $app->make(Config::get('asseco-authentication.user'))
             );
         });
 
@@ -39,22 +39,13 @@ class AuthUserServiceProvider extends ServiceProvider
 
         Auth::provider('jwt_provider', function ($app, array $config) {
             return new TokenUserProvider(
-                $app->make(config('asseco-authentication.user')),
+                $app->make(Config::get('asseco-authentication.user')),
                 $app->make(Decoder::class)
             );
         });
 
         $this->prependMiddleware();
         $this->registerCommands();
-    }
-
-    protected function registerCommands()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                FetchPublicKey::class,
-            ]);
-        }
     }
 
     protected function prependMiddleware(): void
@@ -66,4 +57,14 @@ class AuthUserServiceProvider extends ServiceProvider
             $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
         }
     }
+
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FetchPublicKey::class,
+            ]);
+        }
+    }
+
 }
