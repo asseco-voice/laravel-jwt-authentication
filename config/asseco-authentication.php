@@ -4,7 +4,7 @@ return [
     /**
      * Url the voice:fetch-key command will call to fetch the public key.
      */
-    'iaa_uri'                    => env('IAM_URI'),
+    'iam_uri'                    => env('IAM_URI'),
 
     'iam_realm'                  => env('IAM_REALM'),
 
