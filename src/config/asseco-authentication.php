@@ -13,7 +13,11 @@ return [
     /**
      * Url the voice-auth:key command will call to fetch the public key.
      */
-    'iam_key_url'                => env('IAM_KEY_URL'),
+    'ima_uri'                    => env('IAM_URI'),
+
+    'iam_realm'                  => env('IAM_REALM'),
+
+    'iam_key_url'                => env('IAM_URI') . "/auth/realms/" . env('IAM_REALM'),
     /**
      * Under what key in the response array can the public key be found.
      */
