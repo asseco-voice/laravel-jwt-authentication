@@ -23,41 +23,33 @@ class FetchPublicKey extends Command
     protected $description = 'Fetch IAM public key from the service';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
      */
     public function handle()
     {
-        if (!config('asseco-authentication.iam_key_url')) {
+        $iamKeyUrl = Config::get('asseco-authentication.iam_key_url');
+
+        if (!$iamKeyUrl) {
             $this->error('Configuration missing. no IAM_KEY_URL set');
 
             return 1;
         }
 
         try {
-            $response = Http::get(config('asseco-authentication.iam_key_url'));
+            $response = Http::get($iamKeyUrl);
             $jsonBody = $response->json();
         } catch (\Exception $exception) {
-            echo 'Failed fetching public key';
-            echo $exception->getMessage();
+            $this->error('Failed fetching public key');
+            $this->error($exception->getMessage());
 
             return 1;
         }
 
         $responseKey = Config::get('asseco-authentication.public_key_array_location');
         if (!isset($jsonBody[$responseKey])) {
-            $this->error('Unable to read ' . $responseKey . ' from response!');
+            $this->error("Unable to read $responseKey from response!'");
 
             return 1;
         }
@@ -70,9 +62,10 @@ class FetchPublicKey extends Command
 
             return 1;
         }
+
         $publicKeyFile = fopen($publicKeyLocation, 'w');
         fwrite($publicKeyFile, $publicKey);
-        $this->info('Public key from : ' . config('asseco-authentication.iam_key_url') . ' stored into : ' . $publicKeyLocation);
+        $this->info('Public key from : ' . $iamKeyUrl . ' stored into : ' . $publicKeyLocation);
 
         return 0;
     }
