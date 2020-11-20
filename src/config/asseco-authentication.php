@@ -17,7 +17,7 @@ return [
 
     'iam_realm'                  => env('IAM_REALM'),
 
-    'iam_key_url'                => env('IAM_URI') . "/auth/realms/" . env('IAM_REALM'),
+    'iam_key_url'                => env('IAM_URI') . '/auth/realms/' . env('IAM_REALM'),
     /**
      * Under what key in the response array can the public key be found.
      */
