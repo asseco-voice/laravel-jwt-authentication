@@ -117,7 +117,7 @@ class Decoder
             return false;
         }
 
-        if (!Config::get('asseco-authentication.verify_expiration')) {
+        if (!config('asseco-authentication.verify_expiration')) {
             throw new TokenExpirationException();
         }
 
@@ -127,7 +127,7 @@ class Decoder
             return true;
         }
 
-        if (Config::get('asseco-authentication.throw_exception_on_invalid')) {
+        if (config('asseco-authentication.throw_exception_on_invalid')) {
             throw new TokenExpirationException();
         }
 

@@ -30,9 +30,9 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public function __construct()
     {
-        $this->identifier = Config::get('asseco-authentication.user_identifier');
-        $this->claimMap = Config::get('asseco-authentication.claim_map');
-        $this->clientIdentifier = Config::get('asseco-authentication.client_identifier');
+        $this->identifier = config('asseco-authentication.user_identifier');
+        $this->claimMap = config('asseco-authentication.claim_map');
+        $this->clientIdentifier = config('asseco-authentication.client_identifier');
     }
 
     /**

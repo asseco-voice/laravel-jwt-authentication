@@ -29,7 +29,7 @@ class FetchPublicKey extends Command
      */
     public function handle()
     {
-        $iamKeyUrl = Config::get('asseco-authentication.iam_key_url');
+        $iamKeyUrl = config('asseco-authentication.iam_key_url');
 
         if (!$iamKeyUrl) {
             $this->error('Configuration missing. no IAM_KEY_URL set');
@@ -47,7 +47,7 @@ class FetchPublicKey extends Command
             return 1;
         }
 
-        $responseKey = Config::get('asseco-authentication.public_key_array_location');
+        $responseKey = config('asseco-authentication.public_key_array_location');
         if (!isset($jsonBody[$responseKey])) {
             $this->error("Unable to read $responseKey from response!'");
 
@@ -55,7 +55,7 @@ class FetchPublicKey extends Command
         }
 
         $publicKey = '-----BEGIN PUBLIC KEY-----' . PHP_EOL . $jsonBody[$responseKey] . PHP_EOL . '-----END PUBLIC KEY-----';
-        $publicKeyLocation = Config::get('asseco-authentication.public_key');
+        $publicKeyLocation = config('asseco-authentication.public_key');
 
         if (!$this->verifyAndCreateKeyLocation($publicKeyLocation)) {
             $this->error('Failed verifying location for public key!');

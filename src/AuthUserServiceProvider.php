@@ -29,14 +29,14 @@ class AuthUserServiceProvider extends ServiceProvider
 
         $this->app->bind(Decoder::class, function ($app) {
             return new Decoder(
-                Config::get('asseco-authentication.public_key'),
-                $app->make(Config::get('asseco-authentication.user'))
+                config('asseco-authentication.public_key'),
+                $app->make(config('asseco-authentication.user'))
             );
         });
 
         Auth::provider('jwt_provider', function ($app, array $config) {
             return new TokenUserProvider(
-                $app->make(Config::get('asseco-authentication.user')),
+                $app->make(config('asseco-authentication.user')),
                 $app->make(Decoder::class)
             );
         });
@@ -47,7 +47,7 @@ class AuthUserServiceProvider extends ServiceProvider
 
     protected function prependMiddleware(): void
     {
-        $override = Config::get('asseco-authentication.override_authentication');
+        $override = config('asseco-authentication.override_authentication');
 
         if (!$override) {
             $router = $this->app['router'];
