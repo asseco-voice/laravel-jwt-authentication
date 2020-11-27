@@ -2,8 +2,10 @@
 
 namespace Voice\Auth;
 
+use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Arr;
 use Voice\Auth\App\Decoder;
 use Voice\Auth\App\Interfaces\TokenUserInterface;
 
@@ -37,7 +39,11 @@ class TokenUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        return $this->decoder->decodeToken($credentials['api_token'])->getUser();
+        $token = Arr::get($credentials, 'api_token');
+
+        throw_if(!$token, new Exception('Credentials array is missing api_token'));
+
+        return $this->decoder->decodeToken($token)->getUser();
     }
 
     /**

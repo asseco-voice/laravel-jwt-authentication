@@ -1,5 +1,7 @@
 <?php
 
+use Voice\Auth\App\TokenUser;
+
 return [
     /**
      * Url the voice:fetch-key command will call to fetch the public key.
@@ -22,7 +24,7 @@ return [
     /**
      * User that will be injected into the Laravel auth middleware.
      */
-    'user'                       => '\Voice\Auth\App\TokenUser',
+    'user'                       => TokenUser::class,
 
     /**
      * If set to false, the verifier will not throw an exception and will load the user entity
