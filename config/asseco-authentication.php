@@ -1,6 +1,6 @@
 <?php
 
-use Voice\Auth\App\TokenUser;
+use Asseco\Auth\App\TokenUser;
 
 return [
     /**

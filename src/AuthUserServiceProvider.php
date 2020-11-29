@@ -1,12 +1,12 @@
 <?php
 
-namespace Voice\Auth;
+namespace Asseco\Auth;
 
+use Asseco\Auth\App\Console\Commands\FetchPublicKey;
+use Asseco\Auth\App\Decoder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Voice\Auth\App\Console\Commands\FetchPublicKey;
-use Voice\Auth\App\Decoder;
 
 class AuthUserServiceProvider extends ServiceProvider
 {

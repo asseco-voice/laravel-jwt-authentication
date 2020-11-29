@@ -1,6 +1,6 @@
 <?php
 
-namespace Voice\Auth\App\Exceptions;
+namespace Asseco\Auth\App\Exceptions;
 
 use Throwable;
 

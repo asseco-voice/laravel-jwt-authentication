@@ -17,13 +17,13 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Voice\\Auth\\AuthUserServiceProvider"
+                "Asseco\\Auth\\AuthUserServiceProvider"
             ]
         }
     },
     "autoload": {
         "psr-4": {
-            "Voice\\Auth\\": "src/"
+            "Asseco\\Auth\\": "src/"
         }
     }
 }

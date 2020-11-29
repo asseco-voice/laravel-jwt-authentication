@@ -1,11 +1,11 @@
 <?php
 
-namespace Voice\Auth\App;
+namespace Asseco\Auth\App;
 
+use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
-use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class TokenUser implements Authenticatable, TokenUserInterface
 {

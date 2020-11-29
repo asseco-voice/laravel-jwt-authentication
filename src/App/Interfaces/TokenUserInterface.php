@@ -1,6 +1,6 @@
 <?php
 
-namespace Voice\Auth\App\Interfaces;
+namespace Asseco\Auth\App\Interfaces;
 
 interface TokenUserInterface
 {

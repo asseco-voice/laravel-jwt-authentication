@@ -1,13 +1,13 @@
 <?php
 
-namespace Voice\Auth;
+namespace Asseco\Auth;
 
+use Asseco\Auth\App\Decoder;
+use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Arr;
-use Voice\Auth\App\Decoder;
-use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class TokenUserProvider implements UserProvider
 {

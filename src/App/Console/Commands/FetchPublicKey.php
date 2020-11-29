@@ -1,6 +1,6 @@
 <?php
 
-namespace Voice\Auth\App\Console\Commands;
+namespace Asseco\Auth\App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;

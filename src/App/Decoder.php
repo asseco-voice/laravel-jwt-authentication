@@ -1,7 +1,10 @@
 <?php
 
-namespace Voice\Auth\App;
+namespace Asseco\Auth\App;
 
+use Asseco\Auth\App\Exceptions\InvalidTokenException;
+use Asseco\Auth\App\Exceptions\TokenExpirationException;
+use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use DateTime;
 use Illuminate\Support\Facades\Config;
 use Lcobucci\JWT\Builder;
@@ -10,9 +13,6 @@ use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
-use Voice\Auth\App\Exceptions\InvalidTokenException;
-use Voice\Auth\App\Exceptions\TokenExpirationException;
-use Voice\Auth\App\Interfaces\TokenUserInterface;
 
 class Decoder
 {
