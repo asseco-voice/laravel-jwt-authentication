@@ -96,7 +96,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     public function getId(): ?string
     {
-        return $this->{$this->identifier};
+        return $this->isServiceToken() ? $this->{$this->clientIdentifier} : $this->{$this->identifier};
     }
 
     public function getTokenAsString(): ?string
