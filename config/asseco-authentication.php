@@ -4,7 +4,7 @@ use Asseco\Auth\App\TokenUser;
 
 return [
     /**
-     * Url the voice:fetch-key command will call to fetch the public key.
+     * Url the asseco:fetch-key command will call to fetch the public key.
      */
     'iam_uri'                    => env('IAM_URI'),
 

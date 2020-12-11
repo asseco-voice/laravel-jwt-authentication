@@ -51,7 +51,7 @@ injecting it as the authenticated user.
 Package comes with a convenience command. The only requirement is the env value ```IAM_KEY_URL```.
 
 ```
-php artisan voice:fetch-key
+php artisan asseco:fetch-key
 ```
 
 The method is made to hit the configured endpoint and extract the public key from the response.
