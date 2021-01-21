@@ -3,7 +3,7 @@
 namespace Asseco\Auth;
 
 use Asseco\Auth\App\Console\Commands\FetchPublicKey;
-use Asseco\Auth\App\Decoder;
+use Asseco\Auth\App\Models\Decoder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;

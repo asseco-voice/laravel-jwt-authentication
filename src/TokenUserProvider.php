@@ -2,7 +2,7 @@
 
 namespace Asseco\Auth;
 
-use Asseco\Auth\App\Decoder;
+use Asseco\Auth\App\Models\Decoder;
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;

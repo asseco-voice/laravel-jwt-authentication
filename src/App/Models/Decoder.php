@@ -1,6 +1,6 @@
 <?php
 
-namespace Asseco\Auth\App;
+namespace Asseco\Auth\App\Models;
 
 use Asseco\Auth\App\Exceptions\InvalidTokenException;
 use Asseco\Auth\App\Exceptions\TokenExpirationException;
