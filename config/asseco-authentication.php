@@ -1,6 +1,6 @@
 <?php
 
-use Asseco\Auth\App\TokenUser;
+use Asseco\Auth\App\Models\TokenUser;
 
 return [
     /**
