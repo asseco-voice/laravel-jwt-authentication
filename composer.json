@@ -3,7 +3,7 @@
     "description": "Package to decode and verify JWT tokens",
     "license": "MIT",
     "require": {
-        "php": "^7.4.1",
+        "php": "^7.4.1 || ^8.0",
         "ext-json": "*",
         "laravel/framework": "^8.0",
         "lcobucci/jwt": "^3.3",
