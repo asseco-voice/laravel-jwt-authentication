@@ -4,8 +4,6 @@ namespace Asseco\Auth\App\Console\Commands;
 
 use Asseco\Auth\App\Service\KeyFetcher;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
 
 class FetchPublicKey extends Command
 {
@@ -40,12 +38,12 @@ class FetchPublicKey extends Command
     {
         try {
             $publicKeyLocation = $this->keyFetcher->fetch();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return 1;
         }
 
         $this->info('Public key stored into : ' . $publicKeyLocation);
-        return 0;
 
+        return 0;
     }
 }

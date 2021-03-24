@@ -1,15 +1,13 @@
 <?php
 
-
 namespace Asseco\Auth\App\Service;
-
 
 use Illuminate\Support\Facades\Http;
 
 class KeyFetcher
 {
     /**
-     * Fetches the public key from an iam service and saves it on to a location sed through configuration
+     * Fetches the public key from an iam service and saves it on to a location sed through configuration.
      *
      * @return string
      * @throws \Illuminate\Http\Client\RequestException
@@ -19,7 +17,7 @@ class KeyFetcher
         $iamKeyUrl = config('asseco-authentication.iam_key_url');
 
         if (!$iamKeyUrl) {
-            throw new \Exception("Missing configuration: asseco-authentication.iam_key_url");
+            throw new \Exception('Missing configuration: asseco-authentication.iam_key_url');
         }
 
         $response = Http::get($iamKeyUrl);
@@ -37,6 +35,7 @@ class KeyFetcher
 
         $publicKeyFile = fopen($publicKeyLocation, 'w');
         fwrite($publicKeyFile, $publicKey);
+
         return $publicKeyLocation;
     }
 

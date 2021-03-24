@@ -65,8 +65,7 @@ class Decoder
         string $keyLocation,
         TokenUserInterface $user,
         KeyFetcher $keyFetcher
-    )
-    {
+    ) {
         $this->signer = new Sha256();
 
         $this->builder = new Builder();
@@ -88,7 +87,7 @@ class Decoder
      */
     public function decodeToken(string $token): self
     {
-        if (!file_exists($this->keyLocation)){
+        if (!file_exists($this->keyLocation)) {
             $this->keyLocation = $this->keyFetcher->fetch();
         }
         $this->publicKey = new Key('file://' . $this->keyLocation);
