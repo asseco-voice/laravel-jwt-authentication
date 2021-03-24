@@ -3,9 +3,9 @@
 namespace Asseco\Auth\App\Models;
 
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
+use Asseco\Auth\App\Service\Decoder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Config;
 
 class TokenUser implements Authenticatable, TokenUserInterface
 {
