@@ -1,12 +1,11 @@
 <?php
 
-namespace Asseco\Auth\App\Models;
+namespace Asseco\Auth\App\Service;
 
 use Asseco\Auth\App\Exceptions\InvalidTokenException;
 use Asseco\Auth\App\Exceptions\TokenExpirationException;
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use DateTime;
-use Illuminate\Support\Facades\Config;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Key;
@@ -54,15 +53,19 @@ class Decoder
 
     private string $stringToken;
 
+    private KeyFetcher $keyFetcher;
+
     /**
      * Decoder constructor.
      * @param string $keyLocation
      * @param TokenUserInterface $user
+     * @param KeyFetcher $keyFetcher
      */
-    public function __construct(string $keyLocation, TokenUserInterface $user)
-    {
-        $this->publicKey = new Key('file://' . $keyLocation);
-
+    public function __construct(
+        string $keyLocation,
+        TokenUserInterface $user,
+        KeyFetcher $keyFetcher
+    ) {
         $this->signer = new Sha256();
 
         $this->builder = new Builder();
@@ -71,6 +74,8 @@ class Decoder
 
         $this->user = $user;
         $this->keyLocation = $keyLocation;
+
+        $this->keyFetcher = $keyFetcher;
     }
 
     /**
@@ -78,9 +83,15 @@ class Decoder
      * @return $this
      * @throws InvalidTokenException
      * @throws TokenExpirationException
+     * @throws \Exception
      */
     public function decodeToken(string $token): self
     {
+        if (!file_exists($this->keyLocation)) {
+            $this->keyLocation = $this->keyFetcher->fetch();
+        }
+        $this->publicKey = new Key('file://' . $this->keyLocation);
+
         $this->stringToken = $token;
         $this->splitToken($token);
         $this->validToken = $this->verifyToken();

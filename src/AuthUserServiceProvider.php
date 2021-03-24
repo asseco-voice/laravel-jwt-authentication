@@ -3,9 +3,9 @@
 namespace Asseco\Auth;
 
 use Asseco\Auth\App\Console\Commands\FetchPublicKey;
-use Asseco\Auth\App\Models\Decoder;
+use Asseco\Auth\App\Service\Decoder;
+use Asseco\Auth\App\Service\KeyFetcher;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AuthUserServiceProvider extends ServiceProvider
@@ -30,7 +30,8 @@ class AuthUserServiceProvider extends ServiceProvider
         $this->app->bind(Decoder::class, function ($app) {
             return new Decoder(
                 config('asseco-authentication.public_key'),
-                $app->make(config('asseco-authentication.user'))
+                $app->make(config('asseco-authentication.user')),
+                new KeyFetcher()
             );
         });
 
