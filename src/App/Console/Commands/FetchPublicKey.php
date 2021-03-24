@@ -39,6 +39,7 @@ class FetchPublicKey extends Command
         try {
             $publicKeyLocation = $this->keyFetcher->fetch();
         } catch (\Exception $e) {
+            $this->error($e->getMessage());
             return 1;
         }
 
