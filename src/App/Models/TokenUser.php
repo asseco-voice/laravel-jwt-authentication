@@ -156,6 +156,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     public function getAuthPassword()
     {
         // TODO: Implement getAuthPassword() method.
+        return '';
     }
 
     /**
@@ -164,6 +165,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     public function getRememberToken()
     {
         // TODO: Implement getRememberToken() method.
+        return '';
     }
 
     /**
@@ -172,6 +174,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     public function setRememberToken($value)
     {
         // TODO: Implement setRememberToken() method.
+        return '';
     }
 
     /**
@@ -180,5 +183,6 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     public function getRememberTokenName()
     {
         // TODO: Implement getRememberTokenName() method.
+        return '';
     }
 }

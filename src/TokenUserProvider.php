@@ -51,6 +51,7 @@ class TokenUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
+        return true; // TODO: implement correctly
     }
 
     /**
