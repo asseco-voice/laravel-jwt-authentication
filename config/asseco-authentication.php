@@ -50,7 +50,6 @@ return [
     'user_identifier'            => 'user_id',
 
     /**
-     * TODO: wrong readme, getId()?
      * The key set here will be the one the decoder will look for in the claims array and set as the identifier.
      *
      * By default, user_id is set. This means that when the user object is built it will have a property

@@ -5,9 +5,10 @@ namespace Asseco\Auth\App\Models;
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use Asseco\Auth\App\Service\Decoder;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
-class TokenUser implements Authenticatable, TokenUserInterface
+class TokenUser extends Model implements Authenticatable, TokenUserInterface
 {
     private array $jwtData = [];
 
@@ -28,8 +29,10 @@ class TokenUser implements Authenticatable, TokenUserInterface
 
     private bool $isServiceToken = false;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
+        parent::__construct($attributes);
+
         $this->identifier = config('asseco-authentication.user_identifier');
         $this->claimMap = config('asseco-authentication.claim_map');
         $this->clientIdentifier = config('asseco-authentication.client_identifier');
@@ -90,13 +93,13 @@ class TokenUser implements Authenticatable, TokenUserInterface
         }
 
         foreach ($this->claimMap as $mapKey => $mapValue) {
-            $this->{$mapValue} = Arr::get($claims, $mapKey, null);
+            $this->{$mapValue} = Arr::get($claims, $mapKey);
         }
     }
 
     public function getId(): ?string
     {
-        return $this->isServiceToken() ? $this->{$this->clientIdentifier} : $this->{$this->identifier};
+        return $this->getAuthIdentifier();
     }
 
     public function getTokenAsString(): ?string
@@ -136,7 +139,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
      */
     public function getAuthIdentifierName()
     {
-        // TODO: Implement getAuthIdentifierName() method.
+        return $this->isServiceToken() ? $this->clientIdentifier : $this->identifier;
     }
 
     /**
@@ -144,7 +147,7 @@ class TokenUser implements Authenticatable, TokenUserInterface
      */
     public function getAuthIdentifier()
     {
-        return $this->identifier;
+        return $this->{$this->getAuthIdentifierName()};
     }
 
     /**

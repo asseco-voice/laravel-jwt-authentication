@@ -32,27 +32,18 @@ class Decoder
 
     const ACCESS_KEYWORD = 'access';
 
-    private Key     $publicKey;
-    private Rsa     $signer;
+    private Key $publicKey;
+    private Rsa $signer;
     private Builder $builder;
-    private Parser  $parser;
-    private Token   $token;
-    private bool    $validToken;
-
-    private array  $headers;
-    private array  $claims;
+    private Parser $parser;
+    private Token $token;
+    private bool $validToken;
+    private array $headers;
+    private array $claims;
     private string $signature;
-    /**
-     * @var TokenUserInterface
-     */
     private TokenUserInterface $user;
-    /**
-     * @var string
-     */
     private string $keyLocation;
-
     private string $stringToken;
-
     private KeyFetcher $keyFetcher;
 
     /**
@@ -65,7 +56,8 @@ class Decoder
         string $keyLocation,
         TokenUserInterface $user,
         KeyFetcher $keyFetcher
-    ) {
+    )
+    {
         $this->signer = new Sha256();
 
         $this->builder = new Builder();
@@ -113,7 +105,7 @@ class Decoder
         $this->claims = json_decode(base64_decode($parts[1]), true);
         $this->signature = $parts[2];
 
-        $this->token = $this->parser->parse((string) $token);
+        $this->token = $this->parser->parse((string)$token);
     }
 
     /**
