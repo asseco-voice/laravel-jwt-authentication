@@ -32,27 +32,18 @@ class Decoder
 
     const ACCESS_KEYWORD = 'access';
 
-    private Key     $publicKey;
-    private Rsa     $signer;
+    private Key $publicKey;
+    private Rsa $signer;
     private Builder $builder;
-    private Parser  $parser;
-    private Token   $token;
-    private bool    $validToken;
-
-    private array  $headers;
-    private array  $claims;
+    private Parser $parser;
+    private Token $token;
+    private bool $validToken;
+    private array $headers;
+    private array $claims;
     private string $signature;
-    /**
-     * @var TokenUserInterface
-     */
     private TokenUserInterface $user;
-    /**
-     * @var string
-     */
     private string $keyLocation;
-
     private string $stringToken;
-
     private KeyFetcher $keyFetcher;
 
     /**
