@@ -41,7 +41,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     /**
      * Set claims as properties.
      *
-     * @param array $claims
+     * @param  array  $claims
      * @return $this
      */
     public function setFromClaims(array $claims): self
@@ -55,7 +55,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     /**
      * Add input string token.
      *
-     * @param string $token
+     * @param  string  $token
      * @return $this
      */
     public function setStringToken(string $token): self
@@ -66,7 +66,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     }
 
     /**
-     * @param array $claims
+     * @param  array  $claims
      */
     private function extractData(array $claims = [])
     {
@@ -113,7 +113,7 @@ class TokenUser extends Model implements Authenticatable, TokenUserInterface
     }
 
     /**
-     * @param string $keyword
+     * @param  string  $keyword
      * @return mixed|null
      */
     public function get(string $keyword)

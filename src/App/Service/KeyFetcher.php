@@ -10,6 +10,7 @@ class KeyFetcher
      * Fetches the public key from an iam service and saves it on to a location sed through configuration.
      *
      * @return string
+     *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function fetch(): string
@@ -42,7 +43,7 @@ class KeyFetcher
     /**
      * Check if location exists, if not try to create it.
      *
-     * @param string $location
+     * @param  string  $location
      */
     private function verifyAndCreateKeyLocation(string $location)
     {
