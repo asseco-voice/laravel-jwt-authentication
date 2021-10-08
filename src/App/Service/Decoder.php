@@ -48,9 +48,10 @@ class Decoder
 
     /**
      * Decoder constructor.
-     * @param string $keyLocation
-     * @param TokenUserInterface $user
-     * @param KeyFetcher $keyFetcher
+     *
+     * @param  string  $keyLocation
+     * @param  TokenUserInterface  $user
+     * @param  KeyFetcher  $keyFetcher
      */
     public function __construct(
         string $keyLocation,
@@ -70,8 +71,9 @@ class Decoder
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
      * @return $this
+     *
      * @throws InvalidTokenException
      * @throws TokenExpirationException
      * @throws \Exception
@@ -91,7 +93,8 @@ class Decoder
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
+     *
      * @throws InvalidTokenException
      */
     private function splitToken(string $token)
@@ -109,6 +112,7 @@ class Decoder
 
     /**
      * @return bool
+     *
      * @throws TokenExpirationException
      */
     private function verifyToken(): bool
