@@ -4,11 +4,10 @@ namespace Asseco\Auth\App\Models;
 
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
 use Asseco\Auth\App\Service\Decoder;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
 
-class TokenUser extends Model implements Authenticatable, TokenUserInterface
+class TokenUser extends Authenticatable implements TokenUserInterface
 {
     private array $jwtData = [];
 
