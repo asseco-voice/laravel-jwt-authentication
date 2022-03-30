@@ -94,20 +94,13 @@ class Decoder
 
     /**
      * @param  string  $token
-     *
-     * @throws InvalidTokenException
      */
     private function splitToken(string $token)
     {
-        $parts = explode('.', $token);
-        if (count($parts) != 3) {
-            throw new InvalidTokenException();
-        }
-        $this->headers = json_decode(base64_decode($parts[0]), true);
-        $this->claims = json_decode(base64_decode($parts[1]), true);
-        $this->signature = $parts[2];
-
-        $this->token = $this->parser->parse((string) $token);
+        $this->token = $this->parser->parse($token);
+        $this->headers = $this->token->headers()->all();
+        $this->claims = $this->token->claims()->all();
+        $this->signature = $this->token->signature()->toString();
     }
 
     /**
@@ -127,9 +120,7 @@ class Decoder
             throw new TokenExpirationException();
         }
 
-        $now = (new DateTime())->getTimestamp();
-
-        if (!isset($this->claims['exp']) || $now <= $this->claims['exp']) {
+        if (!isset($this->claims['exp']) || new DateTime() <= $this->claims['exp']) {
             return true;
         }
 
