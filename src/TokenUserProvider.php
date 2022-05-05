@@ -17,6 +17,7 @@ class TokenUserProvider implements UserProvider
 
     /**
      * @inheritDoc
+     *
      * @throws Throwable
      */
     public function retrieveByCredentials(array $credentials)

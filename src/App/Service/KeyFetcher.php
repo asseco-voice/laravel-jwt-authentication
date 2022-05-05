@@ -35,6 +35,7 @@ class KeyFetcher
 
     /**
      * @return string
+     *
      * @throws MissingKeyUrl
      */
     protected function getIamKeyUrl(): string
@@ -49,8 +50,9 @@ class KeyFetcher
     }
 
     /**
-     * @param mixed $response
+     * @param  mixed  $response
      * @return string
+     *
      * @throws MissingResponseKey
      */
     protected function getPublicKey(mixed $response): string
@@ -68,7 +70,7 @@ class KeyFetcher
     /**
      * Check if location exists, if not try to create it.
      *
-     * @param string $location
+     * @param  string  $location
      */
     private function verifyAndCreateKeyLocation(string $location)
     {
