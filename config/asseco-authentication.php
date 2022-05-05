@@ -44,7 +44,7 @@ return [
      * The key set here will be the one the decoder will look for in the claims array and set as the identifier.
      *
      * By default, user_id is set. This means that when the user object is built it will have a property
-     * $userObject->user_id. However it is recommended to use $userObject->getId() that will return the
+     * $userObject->user_id. However, it is recommended to use $userObject->getId() that will return the
      * same thing or null if the property could not be found in the claims.
      */
     'user_identifier'            => 'user_id',
@@ -53,7 +53,7 @@ return [
      * The key set here will be the one the decoder will look for in the claims array and set as the identifier.
      *
      * By default, user_id is set. This means that when the user object is built it will have a property
-     * $userObject->user_id. However it is recommended to user $userObject->getId() that will return the
+     * $userObject->user_id. However, it is recommended to user $userObject->getId() that will return the
      * same thing or null if the property could not be found in the claims.
      *
      * NOTE: If this key is found the TokenUser will be marked as a service user
