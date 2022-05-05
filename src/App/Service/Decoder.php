@@ -11,7 +11,6 @@ use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
 
-
 class Decoder
 {
     public const JWT_IGNORE_CLAIMS = [
@@ -44,16 +43,15 @@ class Decoder
     /**
      * Decoder constructor.
      *
-     * @param string $keyLocation
-     * @param TokenUserInterface $user
-     * @param KeyFetcher $keyFetcher
+     * @param  string  $keyLocation
+     * @param  TokenUserInterface  $user
+     * @param  KeyFetcher  $keyFetcher
      */
     public function __construct(
-        private string             $keyLocation,
+        private string $keyLocation,
         private TokenUserInterface $user,
-        private KeyFetcher         $keyFetcher
-    )
-    {
+        private KeyFetcher $keyFetcher
+    ) {
         $this->configuration = Configuration::forSymmetricSigner(
             new Sha256(),
             InMemory::file($this->keyLocation),
@@ -61,7 +59,7 @@ class Decoder
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
      * @return $this
      *
      * @throws InvalidTokenException
@@ -83,7 +81,7 @@ class Decoder
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
      */
     private function splitToken(string $token)
     {
