@@ -86,7 +86,7 @@ class TokenUser extends Authenticatable implements TokenUserInterface
                 continue;
             }
             $this->data[$claimKey] = $claimValue;
-            if (strpos($claimKey, Decoder::ACCESS_KEYWORD) !== false) {
+            if (str_contains($claimKey, Decoder::ACCESS_KEYWORD)) {
                 $this->roles[$claimKey] = $claimValue;
             }
         }
