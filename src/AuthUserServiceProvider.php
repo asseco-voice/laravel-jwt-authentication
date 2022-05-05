@@ -35,9 +35,8 @@ class AuthUserServiceProvider extends ServiceProvider
             );
         });
 
-        Auth::provider('jwt_provider', function ($app, array $config) {
+        Auth::provider('jwt_provider', function ($app) {
             return new TokenUserProvider(
-                $app->make(config('asseco-authentication.user')),
                 $app->make(Decoder::class)
             );
         });

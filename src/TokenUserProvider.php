@@ -2,46 +2,29 @@
 
 namespace Asseco\Auth;
 
-use Asseco\Auth\App\Interfaces\TokenUserInterface;
+use Asseco\Auth\App\Exceptions\MissingApiToken;
 use Asseco\Auth\App\Service\Decoder;
-use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Arr;
+use Throwable;
 
 class TokenUserProvider implements UserProvider
 {
-    /**
-     * @var TokenUserInterface
-     */
-    private TokenUserInterface $userModel;
-    /**
-     * @var Decoder
-     */
-    private Decoder $decoder;
-    /**
-     * @var array
-     */
-    private array $config;
-
-    public function __construct(
-        TokenUserInterface $userModel,
-        Decoder $decoder,
-        array $config = []
-    ) {
-        $this->userModel = $userModel;
-        $this->decoder = $decoder;
-        $this->config = $config;
+    public function __construct(private Decoder $decoder)
+    {
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws Throwable
      */
     public function retrieveByCredentials(array $credentials)
     {
         $token = Arr::get($credentials, 'api_token');
 
-        throw_if(!$token, new Exception('Credentials array is missing api_token'));
+        throw_if(!$token, new MissingApiToken());
 
         return $this->decoder->decodeToken($token)->getUser();
     }
@@ -51,7 +34,8 @@ class TokenUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        return true; // TODO: implement correctly
+        // TODO: implement correctly
+        return true;
     }
 
     /**
