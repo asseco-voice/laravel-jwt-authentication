@@ -3,13 +3,15 @@
 namespace Asseco\Auth\App\Service;
 
 use Asseco\Auth\App\Exceptions\InvalidTokenException;
-use Asseco\Auth\App\Exceptions\TokenExpirationException;
 use Asseco\Auth\App\Interfaces\TokenUserInterface;
-use DateTime;
+use Illuminate\Http\Client\RequestException;
+use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Validation\Constraint\LooseValidAt;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
 
 class Decoder
 {
@@ -46,15 +48,32 @@ class Decoder
      * @param  string  $keyLocation
      * @param  TokenUserInterface  $user
      * @param  KeyFetcher  $keyFetcher
+     *
+     * @throws RequestException
      */
     public function __construct(
         private string $keyLocation,
         private TokenUserInterface $user,
         private KeyFetcher $keyFetcher
     ) {
+        if (!file_exists($this->keyLocation)) {
+            $this->keyLocation = $this->keyFetcher->fetch();
+        }
+
         $this->configuration = Configuration::forSymmetricSigner(
             new Sha256(),
             InMemory::file($this->keyLocation),
+        );
+
+        // https://lcobucci-jwt.readthedocs.io/en/stable/validating-tokens/
+        $this->configuration->setValidationConstraints(
+            new SignedWith(
+                $this->configuration->signer(),
+                $this->configuration->verificationKey()
+            ),
+            new LooseValidAt(
+                new SystemClock(new \DateTimeZone('UTC'))
+            )
         );
     }
 
@@ -63,19 +82,18 @@ class Decoder
      * @return $this
      *
      * @throws InvalidTokenException
-     * @throws TokenExpirationException
      * @throws \Exception
      */
     public function decodeToken(string $token): self
     {
-        if (!file_exists($this->keyLocation)) {
-            $this->keyLocation = $this->keyFetcher->fetch();
-        }
-
         $this->publicKey = InMemory::file($this->keyLocation);
         $this->stringToken = $token;
         $this->splitToken($token);
-        $this->validToken = $this->verifyToken();
+        $this->validToken = $this->tokenValid();
+
+        if (!$this->validToken) {
+            throw new InvalidTokenException();
+        }
 
         return $this;
     }
@@ -89,32 +107,6 @@ class Decoder
         $this->headers = $this->token->headers()->all();
         $this->claims = $this->token->claims()->all();
         $this->signature = $this->token->signature()->toString();
-    }
-
-    /**
-     * @return bool
-     *
-     * @throws TokenExpirationException
-     */
-    private function verifyToken(): bool
-    {
-        if (!($this->tokenValid())) {
-            return false;
-        }
-
-        if (!config('asseco-authentication.verify_expiration')) {
-            throw new TokenExpirationException();
-        }
-
-        if (!isset($this->claims['exp']) || new DateTime() <= $this->claims['exp']) {
-            return true;
-        }
-
-        if (config('asseco-authentication.throw_exception_on_invalid')) {
-            throw new TokenExpirationException();
-        }
-
-        return false;
     }
 
     private function tokenValid(): bool
