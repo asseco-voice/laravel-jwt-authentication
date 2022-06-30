@@ -45,9 +45,10 @@ class Decoder
     /**
      * Decoder constructor.
      *
-     * @param string $keyLocation
-     * @param TokenUserInterface $user
-     * @param KeyFetcher $keyFetcher
+     * @param  string  $keyLocation
+     * @param  TokenUserInterface  $user
+     * @param  KeyFetcher  $keyFetcher
+     *
      * @throws RequestException
      */
     public function __construct(
@@ -79,8 +80,8 @@ class Decoder
     /**
      * @param  string  $token
      * @return $this
-     * @throws InvalidTokenException
      *
+     * @throws InvalidTokenException
      * @throws \Exception
      */
     public function decodeToken(string $token): self
@@ -90,7 +91,7 @@ class Decoder
         $this->splitToken($token);
         $this->validToken = $this->tokenValid();
 
-        if(!$this->validToken) {
+        if (!$this->validToken) {
             throw new InvalidTokenException();
         }
 
