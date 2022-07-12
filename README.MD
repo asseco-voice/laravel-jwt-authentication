@@ -60,8 +60,3 @@ The method is made to hit the configured endpoint and extract the public key fro
 By default, the command will look for the key `public_key` in the response, however this can 
 be configured through a config file.
 
-## Additional
-
-For dev purposes, you can disable authentication completely by adding this to your ``.env`` file:
-
-    OVERRIDE_AUTHENTICATION=true

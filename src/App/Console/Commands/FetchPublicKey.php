@@ -22,23 +22,15 @@ class FetchPublicKey extends Command
      */
     protected $description = 'Fetch IAM public key from the service';
 
-    protected KeyFetcher $keyFetcher;
-
-    public function __construct(KeyFetcher $keyFetcher)
-    {
-        parent::__construct();
-        $this->keyFetcher = $keyFetcher;
-    }
-
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle()
+    public function handle(KeyFetcher $keyFetcher)
     {
         try {
-            $publicKeyLocation = $this->keyFetcher->fetch();
+            $publicKeyLocation = $keyFetcher->fetch();
         } catch (Exception $e) {
             $this->error($e->getMessage());
 
