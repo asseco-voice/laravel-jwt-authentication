@@ -46,11 +46,11 @@ injecting it as the authenticated user.
 ]
 ```
 
-The public.pem key will be fetched on the first incoming request from the configured ```IAM_KEY_URL```
+The public.pem key will be fetched on the first incoming request from the configured ```AUTH_URL```
 
 ## Fetch key command
 
-Package comes with a convenience command. The only requirement is the env value ```IAM_KEY_URL```.
+Package comes with a convenience command. The only requirement is the env value ```AUTH_URL```.
 
 ```
 php artisan asseco:fetch-key
