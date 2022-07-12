@@ -19,7 +19,7 @@ return [
     /**
      * Location where to save the public key.
      */
-    'public_key'                 => env('JWT_PUBLIC_KEY', '/var/www/html/config/public.pem'),
+    'public_key'                 => env('JWT_PUBLIC_KEY', '/var/www/html/storage/app/public.pem'),
 
     /**
      * User that will be injected into the Laravel auth middleware.
@@ -73,11 +73,6 @@ return [
      * someSubgroup in the user object
      */
     'claim_map'                  => [],
-
-    /**
-     * For dev purposes. Setting to true will ignore authentication completely.
-     */
-    'override_authentication'    => env('OVERRIDE_AUTHENTICATION', false) === true,
 
     'client_id' => env('CLIENT_ID'),
 

@@ -41,18 +41,7 @@ class AuthUserServiceProvider extends ServiceProvider
             );
         });
 
-        $this->prependMiddleware();
         $this->registerCommands();
-    }
-
-    protected function prependMiddleware(): void
-    {
-        $override = config('asseco-authentication.override_authentication');
-
-        if (!$override) {
-            $router = $this->app['router'];
-            $router->prependMiddlewareToGroup('api', 'auth:jwt-api');
-        }
     }
 
     protected function registerCommands()
