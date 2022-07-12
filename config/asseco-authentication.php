@@ -6,7 +6,7 @@ return [
     /**
      * Url the asseco:fetch-key command will call to fetch the public key.
      */
-    'iam_key_url'                => env('IAM_URI') . '/auth/realms/' . env('IAM_REALM'),
+    'auth_url'                   => env('AUTH_URL'),
     /**
      * Under what key in the response array can the public key be found.
      */

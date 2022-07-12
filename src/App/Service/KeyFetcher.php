@@ -2,7 +2,7 @@
 
 namespace Asseco\Auth\App\Service;
 
-use Asseco\Auth\App\Exceptions\MissingKeyUrl;
+use Asseco\Auth\App\Exceptions\AuthUrlKeyMissing;
 use Asseco\Auth\App\Exceptions\MissingResponseKey;
 use Exception;
 use Illuminate\Http\Client\RequestException;
@@ -36,17 +36,17 @@ class KeyFetcher
     /**
      * @return string
      *
-     * @throws MissingKeyUrl
+     * @throws AuthUrlKeyMissing
      */
     protected function getIamKeyUrl(): string
     {
-        $iamKeyUrl = config('asseco-authentication.iam_key_url');
+        $authUrl = config('asseco-authentication.auth_url');
 
-        if (!$iamKeyUrl) {
-            throw new MissingKeyUrl();
+        if (!$authUrl) {
+            throw new AuthUrlKeyMissing();
         }
 
-        return $iamKeyUrl;
+        return $authUrl;
     }
 
     /**
