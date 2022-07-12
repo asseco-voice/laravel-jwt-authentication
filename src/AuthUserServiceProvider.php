@@ -44,7 +44,6 @@ class AuthUserServiceProvider extends ServiceProvider
         $this->registerCommands();
     }
 
-
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
