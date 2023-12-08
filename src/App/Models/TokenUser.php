@@ -184,4 +184,9 @@ class TokenUser extends Authenticatable implements TokenUserInterface
         // TODO: Implement getRememberTokenName() method.
         return '';
     }
+
+    public function setIsServiceToken(bool $isServiceToken): void
+    {
+        $this->isServiceToken = $isServiceToken;
+    }
 }
