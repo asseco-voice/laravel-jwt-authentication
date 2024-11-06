@@ -6,21 +6,21 @@ return [
     /**
      * Url the asseco:fetch-key command will call to fetch the public key.
      */
-    'auth_url'                   => env('AUTH_URL'),
+    'auth_url' => env('AUTH_URL'),
     /**
      * Under what key in the response array can the public key be found.
      */
-    'public_key_array_location'  => 'public_key',
+    'public_key_array_location' => 'public_key',
 
     /**
      * Location where to save the public key.
      */
-    'public_key'                 => env('JWT_PUBLIC_KEY', '/var/www/html/storage/app/public.pem'),
+    'public_key' => env('JWT_PUBLIC_KEY', '/var/www/html/storage/app/public.pem'),
 
     /**
      * User that will be injected into the Laravel auth middleware.
      */
-    'user'                       => TokenUser::class,
+    'user' => TokenUser::class,
 
     /**
      * If set to false, the verifier will not throw an exception and will load the user entity
@@ -34,7 +34,7 @@ return [
     /**
      * If set to false, token expiration will not be checked.
      */
-    'verify_expiration'          => true,
+    'verify_expiration' => true,
 
     /**
      * The key set here will be the one the decoder will look for in the claims array and set as the identifier.
@@ -43,7 +43,7 @@ return [
      * $userObject->user_id. However, it is recommended to use $userObject->getId() that will return the
      * same thing or null if the property could not be found in the claims.
      */
-    'user_identifier'            => 'user_id',
+    'user_identifier' => 'user_id',
 
     /**
      * The key set here will be the one the decoder will look for in the claims array and set as the identifier.
@@ -54,7 +54,7 @@ return [
      *
      * NOTE: If this key is found the TokenUser will be marked as a service user
      */
-    'client_identifier'          => 'clientId',
+    'client_identifier' => 'clientId',
 
     /**
      * Any additional claim values you wish to map should be set here as a key=>value pair where the key is the
@@ -68,7 +68,7 @@ return [
      * This will search for the value subgroup in the group array of the claims and set it as a property
      * someSubgroup in the user object
      */
-    'claim_map'                  => [],
+    'claim_map' => [],
 
     'client_id' => env('CLIENT_ID'),
 
