@@ -61,4 +61,11 @@ class TokenUserProvider implements UserProvider
     {
         return false;
     }
+
+    /**
+     * Part of the contract since Laravel 11; token users have no stored password to rehash.
+     */
+    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false)
+    {
+    }
 }
